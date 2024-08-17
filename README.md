@@ -6,3 +6,4 @@ Repositorio central para repaso de curso
 Matricula: 202138179
 Nombre: Dulce Maria Mauricio Gutierrez
 Materia: Desarrollo de Aplicaciones Web
+Periodo: Otoño 2024
