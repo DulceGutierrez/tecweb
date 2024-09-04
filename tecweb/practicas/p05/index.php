@@ -98,4 +98,11 @@ echo "Transformación para visualización con echo<br>";
 echo "Valor de \$c como string: " . ($c ? 'TRUE' : 'FALSE') . "<br>";
 echo "Valor de \$e como string: " . ($e ? 'TRUE' : 'FALSE') . "<br>";
 
+/*Ejercicio 7*/
+echo "<br>Ejercicio 7<br>";
+echo "Versión de Apache: " . $_SERVER['SERVER_SOFTWARE'] . "<br>";
+echo "Versión de PHP: " . phpversion() . "<br>";
+echo "Sistema operativo del servidor: " . PHP_OS . "<br>";
+echo "Idioma del navegador: " . $_SERVER['HTTP_ACCEPT_LANGUAGE'] . "<br>";
+
 ?>
