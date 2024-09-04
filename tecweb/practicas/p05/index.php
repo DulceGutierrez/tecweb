@@ -78,4 +78,24 @@ echo "Valor de \$a: $a<br>";
 $c = (double) $a;
 echo "Valor de \$c después de la conversión: $c<br>";
 
+/*Ejercicio 6*/
+echo "<br>Ejercicio 6<br>";
+$a = "0";
+$b = "TRUE";
+$c = FALSE;
+$d = ($a OR $b);
+$e = ($a AND $c);
+$f = ($a XOR $b);
+echo "Valor booleano de las variables usando var_dump:<br>";
+echo "\$a (Valor de '0').........."; var_dump($a); echo "<br>";
+echo "\$b (Valor de 'TRUE').."; var_dump($b); echo "<br>";
+echo "\$c (Valor de FALSE).."; var_dump($c); echo "<br>";
+echo "\$d (\$a OR \$b)............."; var_dump($d); echo "<br>";
+echo "\$e (\$a AND \$c).........."; var_dump($e); echo "<br>";
+echo "\$f (\$a XOR \$b).........."; var_dump($f); echo "<br>";
+/*Transformación de valores booleanos*/
+echo "Transformación para visualización con echo<br>";
+echo "Valor de \$c como string: " . ($c ? 'TRUE' : 'FALSE') . "<br>";
+echo "Valor de \$e como string: " . ($e ? 'TRUE' : 'FALSE') . "<br>";
+
 ?>
