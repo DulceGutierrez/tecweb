@@ -67,4 +67,15 @@ echo "Valor de \$b: " . $GLOBALS['b'] . "<br>";
 echo "Valor de \$c: " . $GLOBALS['c'] . "<br>";
 echo "Valor de \$z[0]: " . print_r($GLOBALS['z'], true) . "<br>";
 
+/*Ejercicio 5*/
+echo "<br>Ejercicio 5<br>";
+$a = "7 personas";
+echo "Valor de \$a: $a<br>";
+$b = (integer) $a;
+echo "Valor de \$b después de la conversión: $b<br>";
+$a = "9E3";
+echo "Valor de \$a: $a<br>";
+$c = (double) $a;
+echo "Valor de \$c después de la conversión: $c<br>";
+
 ?>
