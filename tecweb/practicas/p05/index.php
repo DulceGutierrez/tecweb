@@ -51,4 +51,20 @@ echo "Valor de \$b: $b<br>";
 echo "Valor de \$c: $c<br>";
 echo "Valor de \$z[0]: " . print_r($z, true) . "<br>";
 
+/*Ejercicio 4*/
+echo "<br>Ejercicio 4<br>";
+/*Uso de global*/
+global $a, $b, $c, $z;
+echo "Usando global:<br>";
+echo "Valor de \$a: $a<br>";
+echo "Valor de \$b: $b<br>";
+echo "Valor de \$c: $c<br>";
+echo "Valor de \$z[0]: " . print_r($z, true) . "<br>";
+/* Uso de $GLOBALS*/
+echo "Usando \$GLOBALS:<br>";
+echo "Valor de \$a: " . $GLOBALS['a'] . "<br>";
+echo "Valor de \$b: " . $GLOBALS['b'] . "<br>";
+echo "Valor de \$c: " . $GLOBALS['c'] . "<br>";
+echo "Valor de \$z[0]: " . print_r($GLOBALS['z'], true) . "<br>";
+
 ?>
