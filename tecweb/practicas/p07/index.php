@@ -42,5 +42,26 @@
         }
     ?>
 
+    <h2>Ejercicio 5</h2>
+    <p>Identificar si una persona de sexo “femenino”, cuya edad oscile entre los 18 y 35 años y mostrar un mensaje de bienvenida apropiado.</p>
+    <form method="post" action="">
+        <label for="edad">Edad:</label>
+        <input type="number" name="edad" id="edad" required>
+        <br>
+        <label for="sexo">Sexo:</label>
+        <select name="sexo" id="sexo" required>
+            <option value="femenino">Femenino</option>
+            <option value="masculino">Masculino</option>
+        </select>
+        <br>
+        <button type="submit" name="submit5">Enviar</button>
+    </form>
+    <?php
+        if (isset($_POST['submit5'])) {
+            $edad = $_POST['edad'];
+            $sexo = $_POST['sexo'];
+            echo comprobarEdadSexo($edad, $sexo);
+        }
+    ?>
 </body>
 </html>

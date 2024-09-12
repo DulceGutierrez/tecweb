@@ -66,4 +66,14 @@ function crearArregloLetras() {
     $tabla .= "</table>";
     return $tabla;
 }
+
+function comprobarEdadSexo($edad, $sexo) {
+    if ($sexo == "femenino" && $edad >= 18 && $edad <= 35) {
+        return "<h3>Bienvenida, usted está en el rango de edad permitido.</h3>";
+    } else {
+        return "<h3>Usted no cumple con los requisitos.</h3>";
+    }
+}
+
+
 ?>
