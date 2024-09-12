@@ -63,5 +63,45 @@
             echo comprobarEdadSexo($edad, $sexo);
         }
     ?>
+
+    <h2>Ejercicio 6</h2>
+    <h2>Consulta de Parque Vehicular</h2>
+    <form action="index.php" method="post">
+        <label for="matricula">Consultar por matrícula:</label>
+        <input type="text" id="matricula" name="matricula">
+        <button type="submit" name="buscar">Buscar</button>
+    </form>
+
+    <form action="index.php" method="post">
+        <button type="submit" name="todos">Mostrar todos los autos</button>
+    </form>
+
+    <?php
+    if (isset($_POST['buscar'])) {
+        $matricula = strtoupper($_POST['matricula']);
+        $auto = buscarPorMatricula($matricula);
+        if ($auto) {
+            echo "<h2>Información del Auto</h2>";
+            echo "<p>Matrícula: $matricula</p>";
+            echo "<p>Marca: " . $auto['Auto']['marca'] . "</p>";
+            echo "<p>Modelo: " . $auto['Auto']['modelo'] . "</p>";
+            echo "<p>Tipo: " . $auto['Auto']['tipo'] . "</p>";
+            echo "<h2>Información del Propietario</h2>";
+            echo "<p>Nombre: " . $auto['Propietario']['nombre'] . "</p>";
+            echo "<p>Ciudad: " . $auto['Propietario']['ciudad'] . "</p>";
+            echo "<p>Dirección: " . $auto['Propietario']['direccion'] . "</p>";
+        } else {
+            echo "<p>No se encontró información para la matrícula: $matricula</p>";
+        }
+    }
+
+    if (isset($_POST['todos'])) {
+        $todos = obtenerTodosLosAutos();
+        echo "<h2>Parque Vehicular</h2>";
+        echo "<pre>";
+        print_r($todos);
+        echo "</pre>";
+    }
+    ?>
 </body>
 </html>
