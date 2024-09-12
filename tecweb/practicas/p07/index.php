@@ -16,7 +16,13 @@
         }
     ?>
 
-
+    <h2>Ejercicio 2</h2>
+    <p>Generación repetitiva de 3 números aleatorios hasta obtener una secuencia compuesta por impar, par, impar</p>
+    <?php
+        if(isset($_GET['ejercicio']) && $_GET['ejercicio'] == 2){
+            echo generarSecuencia();
+        }
+    ?>
 
     <h2>Ejemplo de POST</h2>
     <form action="http://localhost/tecweb/practicas/p04/index.php" method="post">
