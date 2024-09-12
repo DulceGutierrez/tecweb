@@ -52,4 +52,18 @@ function encontrarMultiploDoWhile($num) {
 
     return "<h3>Primer múltiplo de $num encontrado (do-while): $numero en $iteraciones iteraciones</h3>";
 }
+
+function crearArregloLetras() {
+    $arreglo = [];
+    for ($i = 97; $i <= 122; $i++) {
+        $arreglo[$i] = chr($i);
+    }
+
+    $tabla = "<table border='1'><tr><th>Índice</th><th>Valor</th></tr>";
+    foreach ($arreglo as $key => $value) {
+        $tabla .= "<tr><td>$key</td><td>$value</td></tr>";
+    }
+    $tabla .= "</table>";
+    return $tabla;
+}
 ?>
