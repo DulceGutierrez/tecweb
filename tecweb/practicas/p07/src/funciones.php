@@ -30,4 +30,26 @@ function generarSecuencia() {
     $resultado .= "<h3>Total de números: " . ($iteraciones * 3) . "</h3>";
     return $resultado;
 }
+
+function encontrarMultiploWhile($num) {
+    $iteraciones = 0;
+    $numero = rand(0, 999);
+
+    while ($numero % $num != 0) {
+        $numero = rand(0, 999);
+        $iteraciones++;
+    }
+
+    return "<h3>Primer múltiplo de $num encontrado (while): $numero en $iteraciones iteraciones</h3>";
+}
+
+function encontrarMultiploDoWhile($num) {
+    $iteraciones = 0;
+    do {
+        $numero = rand(0, 999);
+        $iteraciones++;
+    } while ($numero % $num != 0);
+
+    return "<h3>Primer múltiplo de $num encontrado (do-while): $numero en $iteraciones iteraciones</h3>";
+}
 ?>
