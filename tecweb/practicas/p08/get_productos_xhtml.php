@@ -2,7 +2,7 @@
 header("Content-Type: application/xhtml+xml; charset=utf-8");
 echo '<?xml version="1.0" encoding="UTF-8"?>';
 ?>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//ES"
 "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
@@ -25,7 +25,9 @@ echo '<?xml version="1.0" encoding="UTF-8"?>';
     if (!empty($tope)) {
         /** SE CREA EL OBJETO DE CONEXION */
         @$link = new mysqli('localhost', 'root', '123456Dm', 'marketzone');
-        /** NOTA: con @ se suprime el Warning para gestionar el error por medio de código */
+        /** @ para suprimir el Warning para gestionar el error por medio de código */
+
+        $link->set_charset("utf8");
 
         /** comprobar la conexión */
         if ($link->connect_errno) {
