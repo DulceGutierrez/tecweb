@@ -1,6 +1,6 @@
 <?php
 // Conexión a la base de datos
-$link = new mysqli('localhost', 'root', '123456Dm', 'marketzone');
+$link = new mysqli('localhost', 'root', '12345678a', 'marketzone');
 
 // Comprobar la conexión
 if ($link->connect_errno) {
@@ -23,19 +23,14 @@ $result = $link->query($query);
 if ($result->num_rows > 0) {
     echo "El producto ya existe en la base de datos.";
 } else {
-    // Insertar el producto en la BD, incluyendo 'eliminado'
-    $query = "INSERT INTO productos (nombre, marca, modelo, precio, unidades, detalles, imagen, eliminado) VALUES ('$nombre', '$marca', '$modelo', '$precio', '$unidades', '$detalles', '$imagen', 0)";
+    // Comentar la query actual de inserción
+    // $query = "INSERT INTO productos (nombre, marca, modelo, precio, unidades, detalles, imagen, eliminado) VALUES ('$nombre', '$marca', '$modelo', '$precio', '$unidades', '$detalles', '$imagen', 0)";
+    
+    // Nueva query usando nombres de columnas
+    $query = "INSERT INTO productos (nombre, marca, modelo, precio, unidades, detalles, imagen) VALUES ('$nombre', '$marca', '$modelo', '$precio', '$unidades', '$detalles', '$imagen')";
     
     if ($link->query($query) === TRUE) {
-        echo "Producto registrado con éxito.<br>";
-        echo "Resumen de datos ingresados:<br>";
-        echo "Nombre: $nombre<br>";
-        echo "Marca: $marca<br>";
-        echo "Modelo: $modelo<br>";
-        echo "Precio: $precio<br>";
-        echo "Unidades: $unidades<br>";
-        echo "Detalles: $detalles<br>";
-        echo "Imagen: $imagen<br>";
+        echo "Producto registrado con éxito.";
     } else {
         echo "Error: " . $query . "<br>" . $link->error;
     }
