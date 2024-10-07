@@ -1,87 +1,65 @@
-<?php
-// Conexión a la base de datos
-$link = new mysqli('localhost', 'root', '123456Dm', 'marketzone');
-
-// Comprobar la conexión
-if ($link->connect_errno) {
-    die('Falló la conexión: ' . $link->connect_error);
-}
-
-// Establecer la codificación de caracteres a UTF-8
-$link->set_charset("utf8"); 
-
-// Consulta para obtener productos que no están eliminados
-$query = "SELECT * FROM productos WHERE eliminado = 0";
-$result = $link->query($query);
-
-// Encabezados de la tabla en XHTML
-echo '<!DOCTYPE html>
-<html lang="es">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
     <title>Productos Vigentes</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-            margin: 0;
-            padding: 20px;
-        }
-        h2 {
-            color: #333;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-        th, td {
-            padding: 12px;
-            border: 1px solid #ccc;
-            text-align: left;
-        }
-        th {
-            background-color: #f2f2f2;
-        }
-        tr:hover {
-            background-color: #f5f5f5;
-        }
-    </style>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 </head>
 <body>
     <h2>Productos Vigentes</h2>
-    <table>
-        <tr>
-            <th>Nombre</th>
-            <th>Marca</th>
-            <th>Modelo</th>
-            <th>Precio</th>
-            <th>Unidades</th>
-            <th>Detalles</th>
-            <th>Imagen</th>
-        </tr>';
+    <?php
+    // Conexión a la base de datos
+    $link = new mysqli('localhost', 'root', '123456Dm', 'marketzone');
 
-// Mostrar productos
-if ($result->num_rows > 0) {
-    while ($row = $result->fetch_assoc()) {
-        echo "<tr>
-                <td>" . htmlspecialchars($row['nombre']) . "</td>
-                <td>" . htmlspecialchars($row['marca']) . "</td>
-                <td>" . htmlspecialchars($row['modelo']) . "</td>
-                <td>" . htmlspecialchars($row['precio']) . "</td>
-                <td>" . htmlspecialchars($row['unidades']) . "</td>
-                <td>" . htmlspecialchars($row['detalles']) . "</td>
-                <td>" . htmlspecialchars($row['imagen']) . "</td>
-              </tr>";
+    // Comprobar la conexión
+    if ($link->connect_errno) {
+        die('Falló la conexión: ' . $link->connect_error);
     }
-} else {
-    echo "<tr><td colspan='7'>No hay productos vigentes.</td></tr>";
-}
 
-echo '    </table>
+    // Establecer la codificación de caracteres a UTF-8
+    $link->set_charset("utf8");
+
+    // Consulta para obtener productos que no están eliminados
+    $query = "SELECT * FROM productos WHERE eliminado = 0";
+    $result = $link->query($query);
+
+    // Encabezados de la tabla en XHTML
+    echo '<table class="table">
+            <thead class="thead-dark">
+                <tr>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Unidades</th>
+                    <th scope="col">Detalles</th>
+                    <th scope="col">Imagen</th>
+                </tr>
+            </thead>
+            <tbody>';
+
+    // Mostrar productos
+    if ($result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            echo '<tr>
+                    <td>' . htmlspecialchars($row['nombre']) . '</td>
+                    <td>' . htmlspecialchars($row['marca']) . '</td>
+                    <td>' . htmlspecialchars($row['modelo']) . '</td>
+                    <td>' . htmlspecialchars($row['precio']) . '</td>
+                    <td>' . htmlspecialchars($row['unidades']) . '</td>
+                    <td>' . htmlspecialchars($row['detalles']) . '</td>
+                    <td><img src="' . htmlspecialchars($row['imagen']) . '" alt="Imagen del producto" class="img-thumbnail" /></td>
+                  </tr>';
+        }
+    } else {
+        echo '<tr><td colspan="7">No hay productos vigentes.</td></tr>';
+    }
+
+    echo '</tbody></table>';
+
+    // Cerrar la conexión
+    $link->close();
+    ?>
 </body>
-</html>';
-
-// Cerrar la conexión
-$link->close();
-?>
+</html>
