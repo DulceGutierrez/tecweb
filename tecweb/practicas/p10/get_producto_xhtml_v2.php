@@ -1,71 +1,107 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.1//EN"
-    "http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
+"http://www.w3.org/TR/xhtml11/DTD/xhtml11.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="es">
-<head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-    <title>Productos Vigentes</title>
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
-</head>
-<body>
-    <div class="container">
-        <h2>Productos Vigentes</h2>
-        <?php
-        // Conexión a la base de datos
-        $link = new mysqli('localhost', 'root', '123456Dm', 'marketzone');
+<?php
+    //header("Content-Type: application/json; charset=utf-8"); 
+    $data = array();
 
-        // Comprobar la conexión
-        if ($link->connect_errno) {
-            die('Falló la conexión: ' . $link->connect_error);
+    if(isset($_GET['tope']))
+    {
+        $tope = $_GET['tope'];
+    }
+    else
+    {
+        die('Parámetro "tope" no detectado...');
+    }
+
+    if (!empty($tope))
+    {
+        /** SE CREA EL OBJETO DE CONEXION */
+        @$link = new mysqli('localhost', 'root', '123456Dm', 'marketzone');
+        /** NOTA: con @ se suprime el Warning para gestionar el error por medio de código */
+
+        /** comprobar la conexión */
+        if ($link->connect_errno) 
+        {
+            die('Falló la conexión: '.$link->connect_error.'<br/>');
+            //exit();
         }
-
         // Establecer la codificación de caracteres a UTF-8
         $link->set_charset("utf8");
+        /** Crear una tabla que no devuelve un conjunto de resultados */
+        if ( $result = $link->query("SELECT * FROM productos WHERE unidades <= $tope") ) 
+        {
+            /** Se extraen las tuplas obtenidas de la consulta */
+            $row = $result->fetch_all(MYSQLI_ASSOC);
 
-        // Consulta para obtener productos
-        $query = "SELECT * FROM productos";
-        $result = $link->query($query);
-
-        // Encabezados de la tabla en XHTML
-        echo '<table class="table">
-                <thead class="thead-dark">
-                    <tr>
-                        <th scope="col">ID</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Marca</th>
-                        <th scope="col">Modelo</th>
-                        <th scope="col">Precio</th>
-                        <th scope="col">Unidades</th>
-                        <th scope="col">Detalles</th>
-                        <th scope="col">Imagen</th>
-                        <th scope="col">Modificar</th>
-                    </tr>
-                </thead>
-                <tbody>';
-
-        // Mostrar productos
-        if ($result->num_rows > 0) {
-            while ($row = $result->fetch_assoc()) {
-                echo '<tr>
-                        <td>' . htmlspecialchars($row['id']) . '</td>
-                        <td>' . htmlspecialchars($row['nombre']) . '</td>
-                        <td>' . htmlspecialchars($row['marca']) . '</td>
-                        <td>' . htmlspecialchars($row['modelo']) . '</td>
-                        <td>' . htmlspecialchars($row['precio']) . '</td>
-                        <td>' . htmlspecialchars($row['unidades']) . '</td>
-                        <td>' . htmlspecialchars($row['detalles']) . '</td>
-                        <td><img src="' . htmlspecialchars($row['imagen']) . '" alt="Imagen del producto" class="img-thumbnail" width="100"/></td>
-                        <td><a href="formulario_productos_v2.html?id=' . htmlspecialchars($row['id']) . '" class="btn btn-warning btn-sm">Modificar</a></td>
-                      </tr>';
+            /** Se crea un arreglo con la estructura deseada */
+            foreach($row as $num => $registro) {            // Se recorren tuplas
+                foreach($registro as $key => $value) {      // Se recorren campos
+                    $data[$num][$key] = utf8_encode($value);
+                }
             }
-        } else {
-            echo '<tr><td colspan="9">No hay productos disponibles.</td></tr>';
+
+            /** útil para liberar memoria asociada a un resultado con demasiada información */
+            $result->free();
         }
 
-        echo '</tbody></table>';
-
-        // Cerrar la conexión
         $link->close();
-        ?>
-    </div>
-</body>
+
+        /** Se devuelven los datos en formato JSON */
+        //echo json_encode($data, JSON_PRETTY_PRINT);
+    }
+    ?>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <title>Producto</title>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    </head>
+    <body>
+        <h3>PRODUCTO</h3>
+
+        <br/>
+        
+        <?php if( isset($row) ) : ?>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                    <th scope="col">#</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col">Marca</th>
+                    <th scope="col">Modelo</th>
+                    <th scope="col">Precio</th>
+                    <th scope="col">Unidades</th>
+                    <th scope="col">Detalles</th>
+                    <th scope="col">Imagen</th>
+                    <th scope="col">Acciones</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <?php foreach($row as $value) : ?>
+                    <tr>
+                        <th scope="row"><?= $value['id'] ?></th>
+                        <td><?= $value['nombre'] ?></td>
+                        <td><?= $value['marca'] ?></td>
+                        <td><?= $value['modelo'] ?></td>
+                        <td><?= $value['precio'] ?></td>
+                        <td><?= $value['unidades'] ?></td>
+                        <td><?= $value['detalles'] ?></td>
+                        <td><img src=<?= $value['imagen'] ?> width="100"></td>
+                        
+                        <td>
+                            <a href="formulario_productos_v2.php?id=<?= urlencode($value['id']) ?>&nombre=<?= urlencode($value['nombre']) ?>&marca=<?= urlencode($value['marca']) ?>&modelo=<?= urlencode($value['modelo']) ?>&precio=<?= urlencode($value['precio']) ?>&unidades=<?= urlencode($value['unidades']) ?>&detalles=<?= urlencode($value['detalles']) ?>&imagen=<?= urlencode($value['imagen']) ?>">Modificar</a>
+                        </td>
+
+                    </tr>
+                    <?php endforeach; ?>
+                </tbody>
+            </table>
+        <?php elseif(!empty($id)) : ?>
+
+             <script>
+                alert('El ID del producto no existe');
+             </script>
+
+        <?php endif; ?>
+    </body>
 </html>

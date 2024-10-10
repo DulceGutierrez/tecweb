@@ -1,11 +1,13 @@
 <?php
 // Conexión a la base de datos
-$link = new mysqli('localhost', 'root', '12345678a', 'marketzone');
+$link = new mysqli('localhost', 'root', '123456Dm', 'marketzone');
 
 // Comprobar la conexión
 if ($link->connect_errno) {
     die('Falló la conexión: ' . $link->connect_error);
 }
+// Establecer la codificación de caracteres a UTF-8
+$link->set_charset("utf8");
 
 // Obtener datos del formulario
 $nombre = $_POST['nombre'];
@@ -31,7 +33,9 @@ if ($result->num_rows > 0) {
     
     if ($link->query($query) === TRUE) {
         echo "Producto registrado con éxito.";
-        
+        echo '<tr>
+            <td><a href="formulario_productos.html?id=' . htmlspecialchars($row['id']) . '" class="btn btn-warning btn-sm">Modificar</a></td>
+            </tr>';
     } else {
         echo "Error: " . $query . "<br>" . $link->error;
     }

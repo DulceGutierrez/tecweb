@@ -51,7 +51,7 @@
                     <td>' . htmlspecialchars($row['unidades']) . '</td>
                     <td>' . htmlspecialchars($row['detalles']) . '</td>
                     <td><img src="' . htmlspecialchars($row['imagen']) . '" alt="Imagen del producto" class="img-thumbnail" /></td>
-                    <td><a href="formulario_productos_v2.html?id=' . $row['id'] . '">Modificar</a></td>
+                    <td><a href="formulario_productos_v2.php?id=' . $row['id'] . '">Modificar</a></td>
                   </tr>';
         }
     } else {
