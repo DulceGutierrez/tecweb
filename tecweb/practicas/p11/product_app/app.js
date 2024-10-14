@@ -144,6 +144,53 @@ function buscarID(event) {
     .catch(error => console.error('Error:', error));
 }
 
+function agregarProducto(event) {
+    event.preventDefault();
+
+    const nombre = document.getElementById('name').value;
+    const jsonData = document.getElementById('description').value;
+
+    // Validación de los datos
+    if (!nombre || !jsonData) {
+        alert("Por favor, completa todos los campos.");
+        return;
+    }
+
+    // Intentamos convertir el JSON a objeto
+    let producto;
+    try {
+        producto = JSON.parse(jsonData);
+    } catch (e) {
+        alert("El JSON de producto es inválido.");
+        return;
+    }
+
+    // Validar que el objeto contenga las propiedades requeridas
+    if (!producto.precio || !producto.unidades || !producto.modelo || !producto.marca || !producto.detalles) {
+        alert("El JSON debe contener precio, unidades, modelo, marca y detalles.");
+        return;
+    }
+
+    // Preparar los datos para enviar
+    const formData = new FormData();
+    formData.append('producto', JSON.stringify({ nombre, ...producto }));
+
+    fetch('backend/create.php', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            alert("Producto agregado exitosamente.");
+        } else {
+            alert("Error al agregar el producto: " + data.message);
+        }
+    })
+    .catch(error => console.error('Error:', error));
+}
+
 // Event listeners para los botones de búsqueda
 document.getElementById('searchButton').addEventListener('click', buscarProducto);
 document.querySelector('form[onsubmit="buscarID(event)"]').addEventListener('submit', buscarID);
+document.getElementById('task-form').addEventListener('submit', agregarProducto);
