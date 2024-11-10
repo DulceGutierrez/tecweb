@@ -1,0 +1,10 @@
+{
+    "autoload": {
+        "psr-4": {
+            "Create\\": "backend/Create/",
+            "Read\\": "backend/Read/",
+            "Update\\": "backend/Update/",
+            "Delete\\": "backend/Delete/"
+        }
+    }
+}
