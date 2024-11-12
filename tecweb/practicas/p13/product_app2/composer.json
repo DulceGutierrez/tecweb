@@ -1,0 +1,17 @@
+{
+    "name": "tecweb/myapi",
+    "description": "Aplicación de gestión de productos para Marketzone.",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "TECWEB\\MYAPI\\": "backend/myapi/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Mariana",
+            "email": "mariana.ayala2111@gmail.com"
+        }
+    ],
+    "require": {}
+}
